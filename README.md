@@ -12,3 +12,7 @@ sudo docker exec -it <docker_hash> /bin/bash
 sudo docker kill <container_id>  
 ***List all docker instances***  
 sudo docker ps -a  
+***Remove all stopped containers***  
+docker container prune -f  
+***Remove all docker resources***  
+docker system prune -a --volumes -f  
