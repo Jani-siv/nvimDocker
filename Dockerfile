@@ -31,6 +31,14 @@ RUN useradd -ms /bin/bash devuser
 # Set the user to 'devuser'
 USER devuser
 
+# Clone latest nvim settings
+RUN git clone https://github.com/Jani-siv/nvimSettings.git /home/devuser/.config/nvim
+
+# Setup lua language server
+RUN git clone https://github.com/LuaLS/lua-language-server  /home/devuser/.config/nvim/lsp
+WORKDIR /home/devuser/.config/nvim/lsp
+RUN ./make.sh
+
 # Set the working directory inside the container
 WORKDIR /home/devuser/dev
 
@@ -38,15 +46,8 @@ WORKDIR /home/devuser/dev
 WORKDIR /home/devuser/bin
 RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 RUN tar -xzf nvim-linux64.tar.gz
-RUN echo "PATH=$PATH:/home/devuser/bin/nvim-linux64/bin" >> ~/.bashrc
-# Clone latest nvim settings
-RUN git clone https://github.com/Jani-siv/nvimSettings.git /home/devuser/.config/nvim
-#RUN mkdir -p /home/devuser/.config/nvim
-#RUN mkdir -p /home/devuser/.config/nvim/lua
-
-# update nvim settings
-#COPY nvimSettings/init.lua /home/devuser/.config/nvim/init.lua
-#COPY nvimSettings/lua/lsp_config.lua /home/devuser/.config/nvim/lua/lsp_config.lua
+# Setup path variables
+RUN echo "PATH=$PATH:/home/devuser/bin/nvim-linux64/bin:/home/devuser/.config/nvim/lsp/bin/" >> ~/.bashrc
 
 # Junegunn Plugin installer for nvim
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
