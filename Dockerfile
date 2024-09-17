@@ -13,6 +13,7 @@ RUN apt-get install -y cmake              # Build system
 RUN apt-get install -y python3            # Python for scripting
 RUN apt-get install -y python3-pip        # Python package manager
 RUN apt-get install -y clangd             # Clangd for code completion
+RUN apt-get install -y lua5.3             # Lua language support
 RUN apt-get clean     # Clean up package lists to reduce image size
 
 # Install Node.js and npm via apt-get
