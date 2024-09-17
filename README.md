@@ -2,6 +2,8 @@
 ## Docker Usage
 ***build docker image***  
 sudo docker build -t <image_name> <path_to_Dockerfile>  
+***build docker image without cache***  
+sudo docker build --no-cache -t <image_name> <path_to_Dockerfile>  
 ***Start docker image as background***  
 sudo docker run -d <image_name>  
 ***Use bash inside of docker***  
