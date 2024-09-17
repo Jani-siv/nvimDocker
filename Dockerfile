@@ -13,8 +13,14 @@ RUN apt-get install -y cmake              # Build system
 RUN apt-get install -y python3            # Python for scripting
 RUN apt-get install -y python3-pip        # Python package manager
 RUN apt-get install -y clangd             # Clangd for code completion
-RUN apt-get install -y npm                # language server
 RUN apt-get clean     # Clean up package lists to reduce image size
+
+# Install Node.js and npm via apt-get
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    npm -v && \
+    node -v
+    
 #install all required language servers
 RUN npm install -g pyright
 RUN npm install -g bash-language-server
